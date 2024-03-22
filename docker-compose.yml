@@ -1,0 +1,55 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    command: /bin/sh -c "./wait-for-it.sh --strict postgres:5432 && \
+                        ./wait-for-it.sh --strict mongo:27017 && \
+                        ./wait-for-it.sh --strict redis:6379 && \
+                        your-application-start-command"
+    container_name: atlas_the_joy_of_painting_api
+    volumes:
+      - .:/atlas-the-joy-of-painting-api
+    ports:
+      - "8080:8080"
+      - "5000:5000"
+      - "3000:3000"
+      - "4000:4000"
+    depends_on:
+      - postgres
+      - mongo
+      - redis
+    # Add other configurations as needed
+
+  postgres:
+    image: postgres:16.2
+    container_name: postgres_atlas_the_joy_of_painting_api
+    environment:
+      POSTGRES_DB: joy_of_painting
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  mongo:
+    image: mongo:6.0
+    container_name: mongo_atlas_the_joy_of_painting_api
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+  redis:
+    image: redis:7.2
+    container_name: redis_atlas_the_joy_of_painting_api
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
+  mongo_data:
+  # Define other volumes as needed
