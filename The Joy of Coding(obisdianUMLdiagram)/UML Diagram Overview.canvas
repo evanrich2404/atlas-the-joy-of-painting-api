@@ -1,8 +1,0 @@
-{
-	"nodes":[
-		{"id":"5f9ded7bd101d911","x":-140,"y":-480,"width":400,"height":400,"type":"file","file":"UML Diagram for Behavior.canvas"},
-		{"id":"2789ab6ff4a39ae4","x":480,"y":-160,"width":400,"height":400,"type":"file","file":"UML Diagram for Data Relations.canvas"},
-		{"id":"23cf206ccdc33eb3","x":-800,"y":-160,"width":400,"height":400,"type":"file","file":"UML Diagram for Structure.canvas"}
-	],
-	"edges":[]
-}
