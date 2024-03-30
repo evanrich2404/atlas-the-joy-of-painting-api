@@ -4,7 +4,7 @@ services:
     build: .
     command: /bin/sh -c "./wait-for-it.sh --strict postgres:5432 && \
                         ./wait-for-it.sh --strict redis:6379 && \
-                        your-application-start-command"
+                        tail -f /dev/null"
     container_name: atlas_the_joy_of_painting_api
     volumes:
       - .:/atlas-the-joy-of-painting-api

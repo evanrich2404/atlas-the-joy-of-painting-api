@@ -5,7 +5,13 @@ import os
 
 # Preprocess and normalize titles
 def preprocess_title(title):
-    title = re.sub(r'\bMt\.\b', 'Mount', title, flags=re.IGNORECASE)
+    # Explicitly handle different scenarios for "Mt." to "Mount" conversion
+    # 1. "Mt." at the start of a title
+    title = re.sub(r'^Mt\.\s+', 'Mount ', title, flags=re.IGNORECASE)
+    # 2. "Mt." in the middle or end, ensuring it's not part of "Mountain"
+    title = re.sub(r'\s+Mt\.\s*', ' Mount ', title, flags=re.IGNORECASE)
+    # 3. "Mt." followed by punctuation (e.g., at the end of a sentence/title)
+    title = re.sub(r'\s+Mt\.\b', ' Mount', title, flags=re.IGNORECASE)
     return title.title()
 
 
@@ -40,7 +46,7 @@ def preprocess_subject_matter(input_filename, output_filename):
         writer.writeheader()
 
         for row in reader:
-            painting_title = preprocess_title(row['TITLE'])
+            painting_title = preprocess_title(row['TITLE'].strip('"'))
             # Skip EPISODE and TITLE, start from the 3rd column
             subjects = [subject for subject in reader.fieldnames[2:]
                         if row[subject] == '1']
@@ -73,30 +79,30 @@ def preprocess_colors_used(input_filename, output_filename):
 
 # Colors Used Processing
 input_filename = (
-    'atlas-the-joy-of-painting-api/data_sets/'
+    '../data_sets/'
     'The Joy Of Painiting - Colors Used'
 )
 output_filename = (
-    'atlas-the-joy-of-painting-api/transformed_data/preprocessed_colors.csv'
+    '../transformed_data/preprocessed_colors.csv'
 )
 preprocess_colors_used(input_filename, output_filename)
 
 # Subject Matter
 input_filename = (
-    'atlas-the-joy-of-painting-api/data_sets/'
+    '../data_sets/'
     'The Joy Of Painiting - Subject Matter'
 )
 output_filename = (
-    'atlas-the-joy-of-painting-api/transformed_data/preprocessed_subjects.csv'
+    '../transformed_data/preprocessed_subjects.csv'
 )
 preprocess_subject_matter(input_filename, output_filename)
 
 # Episode Dates
 input_filename = (
-    'atlas-the-joy-of-painting-api/data_sets/'
+    '../data_sets/'
     'The Joy Of Painting - Episode Dates'
 )
 output_filename = (
-    'atlas-the-joy-of-painting-api/transformed_data/preprocessed_dates.csv'
+    '../transformed_data/preprocessed_dates.csv'
 )
 preprocess_episode_dates(input_filename, output_filename)

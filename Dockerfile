@@ -9,7 +9,7 @@ ENV LC_ALL en_US.UTF-8
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    curl wget git vim emacs locales build-essential tzdata lsof \
+    curl wget git vim emacs locales build-essential tzdata lsof postgresql-client \
     python3 python3-pip
 
 # Setup locale
@@ -27,7 +27,7 @@ WORKDIR /atlas-the-joy-of-painting-api
 
 # Install Python libraries for data manipulation, ETL, and database interaction
 RUN pip3 install --no-cache-dir \
-    pandas sqlalchemy numpy pyarrow csvkit beautifulsoup4 lxml requests redis psycopg2
+    pandas sqlalchemy numpy pyarrow csvkit beautifulsoup4 lxml requests redis psycopg2-binary
 
 # Create a non-root user
 RUN useradd -M correction_tester
