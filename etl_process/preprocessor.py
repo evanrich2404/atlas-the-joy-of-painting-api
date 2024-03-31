@@ -83,7 +83,7 @@ input_filename = (
     'The Joy Of Painiting - Colors Used'
 )
 output_filename = (
-    '../transformed_data/preprocessed_colors.csv'
+    '../preprocessed_data/preprocessed_colors.csv'
 )
 preprocess_colors_used(input_filename, output_filename)
 
@@ -93,7 +93,7 @@ input_filename = (
     'The Joy Of Painiting - Subject Matter'
 )
 output_filename = (
-    '../transformed_data/preprocessed_subjects.csv'
+    '../preprocessed_data/preprocessed_subjects.csv'
 )
 preprocess_subject_matter(input_filename, output_filename)
 
@@ -103,6 +103,6 @@ input_filename = (
     'The Joy Of Painting - Episode Dates'
 )
 output_filename = (
-    '../transformed_data/preprocessed_dates.csv'
+    '../preprocessed_data/preprocessed_dates.csv'
 )
 preprocess_episode_dates(input_filename, output_filename)
