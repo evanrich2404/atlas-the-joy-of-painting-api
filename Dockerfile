@@ -27,7 +27,7 @@ WORKDIR /atlas-the-joy-of-painting-api
 
 # Install Python libraries for data manipulation, ETL, and database interaction
 RUN pip3 install --no-cache-dir \
-    pandas sqlalchemy numpy pyarrow csvkit beautifulsoup4 lxml requests redis psycopg2-binary
+    pandas sqlalchemy numpy pyarrow csvkit beautifulsoup4 lxml requests redis psycopg2-binary python-dotenv Flask
 
 # Create a non-root user
 RUN useradd -M correction_tester

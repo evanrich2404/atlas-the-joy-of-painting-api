@@ -1,5 +1,6 @@
 import csv
 import re
+import ast
 import os
 
 
@@ -64,17 +65,24 @@ def preprocess_colors_used(input_filename, output_filename):
     with open(input_filename, newline='', encoding='utf-8') as infile, \
          open(output_filename, 'w', newline='', encoding='utf-8') as outfile:
         reader = csv.DictReader(infile)
-        writer = csv.DictWriter(outfile, fieldnames=['painting_title',
-                                                     'colors', 'color_hex'])
+        fieldnames = ['painting_title', 'color_name', 'color_hex']
+        writer = csv.DictWriter(outfile, fieldnames=fieldnames)
         writer.writeheader()
 
         for row in reader:
             row['painting_title'] = preprocess_title(row['painting_title'])
-            writer.writerow({
-                'painting_title': row['painting_title'],
-                'colors': row.get('colors', ''),
-                'color_hex': row.get('color_hex', '')
-            })
+            painting_title = row['painting_title']
+
+            colors = ast.literal_eval(row['colors'])
+            color_hexes = ast.literal_eval(row['color_hex'])
+
+            for color_name, color_hex in zip(colors, color_hexes):
+                color_name = color_name.replace('\r\n', '')
+                writer.writerow({
+                    'painting_title': row['painting_title'],
+                    'color_name': color_name,
+                    'color_hex': color_hex
+                })
 
 
 # Colors Used Processing
@@ -83,7 +91,7 @@ input_filename = (
     'The Joy Of Painiting - Colors Used'
 )
 output_filename = (
-    '../preprocessed_data/preprocessed_colors.csv'
+    '../transformed_data/transformed_colors.csv'
 )
 preprocess_colors_used(input_filename, output_filename)
 
@@ -103,6 +111,6 @@ input_filename = (
     'The Joy Of Painting - Episode Dates'
 )
 output_filename = (
-    '../preprocessed_data/preprocessed_dates.csv'
+    '../transformed_data/transformed_dates.csv'
 )
 preprocess_episode_dates(input_filename, output_filename)

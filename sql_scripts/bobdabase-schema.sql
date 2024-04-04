@@ -7,7 +7,7 @@ INSERT INTO schema_version (version) VALUES (1);
 -- Create episodes table
 CREATE TABLE episodes (
   id SERIAL PRIMARY KEY,
-  title VARCHAR(255),
+  painting_title VARCHAR(255) UNIQUE NOT NULL,
   broadcast_date DATE
 );
 COMMENT ON TABLE episodes IS 'Stores the painting title and date of each episode for The Joy of Painting.';
@@ -15,15 +15,15 @@ COMMENT ON TABLE episodes IS 'Stores the painting title and date of each episode
 -- Create subjects table
 CREATE TABLE subjects (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(255)
+  name VARCHAR(255) UNIQUE NOT NULL
 );
 COMMENT ON TABLE subjects IS 'Stores the subjects of the episodes and the painting title of the episode for The Joy of Painting.';
 
 -- Create colors table
 CREATE TABLE colors (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(50),
-  hex_code VARCHAR(7)
+  name VARCHAR(50) UNIQUE NOT NULL,
+  hex_code VARCHAR(7) UNIQUE NOT NULL
 );
 COMMENT ON TABLE colors IS 'Stores the hex_code of the many different colors used as well as painting title of each episode for The Joy of Painting.';
 
